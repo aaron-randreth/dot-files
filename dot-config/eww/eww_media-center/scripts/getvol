@@ -1,0 +1,7 @@
+#!/bin/sh
+
+source volume_display
+
+echo "here"
+
+echo "$volume"

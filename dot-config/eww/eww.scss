@@ -1,0 +1,76 @@
+$focus-color: #5a002c;
+$focus-accent-color: #D35D6E;
+$background-color: rgba(0, 0, 0, 0.5);
+$background-accent-color: rgba(00, 170, 238, 0.6);
+$round: 10px;
+
+.bar {
+    font-family: SourceCodePro;
+    background-color: $background-color;
+    border-right: 2px solid $focus-color;
+    // border-radius: $round 0 0 $round;
+}
+
+.content {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+/* ======= Metric ========= */
+
+.metric scale trough {
+  all: unset;
+  $color: 50;
+  background: rgba($color,$color,$color,0.5);/*#4e4e4e;*/
+  border: 1px solid $focus-accent-color;
+  border-radius: $round;
+  min-height: 10rem;
+  min-width: 1rem;
+}
+
+
+.metric scale trough highlight {
+  all: unset;
+  background: $focus-accent-color;
+  color: #000000;
+  border-radius: 0 0 $round $round;
+}
+
+.metric scale trough slider {
+    all: unset;
+    background: $focus-color;
+    min-height: 2px;
+    min-width: 1rem;
+}
+
+.metric scale value {
+    all: unset;
+    font-size: 0.8rem;
+    color: white;
+}
+
+/* ===== Dynamic Metric ====*/
+
+.Discharging scale trough {
+}
+
+.Charging scale trough {
+    background: $background-accent-color;
+}
+
+.off scale trough highlight{
+    background: $focus-color;
+}
+
+/* ======= Misc ig ========= */
+
+.time-box .bits-box {
+    $margin: 0px;
+    margin-left: $margin;
+    margin-right: $margin;
+}
+
+.time {
+    font-size: 1rem;
+    color: white;
+}

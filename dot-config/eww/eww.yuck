@@ -1,0 +1,157 @@
+(defwidget metric [label value onchange min max]
+  (box :orientation "v"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale 
+       :min min
+       :max max
+           :active {onchange != ""}
+           :value value
+           :onchange onchange
+           :orientation "v"
+           :flipped true)))
+
+
+(defwidget brightness []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :tooltip "Brightness: ${brightness}%"
+
+    (metric :label ""
+            :value {brightness}
+            :onchange "set_light {} no_set"
+            :min 10
+            :max 101
+    )
+    )
+)
+
+(defwidget volume []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :class "${is_off}"
+        :tooltip "Volume: ${volume}%"
+
+    (metric :label ""
+            :value {volume}
+            :onchange "amixer -qM set Master {}%"
+            :min 0
+            :max 101
+    )
+    )
+)
+
+(defwidget battery []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :tooltip "Battery: ${EWW_BATTERY["BAT0"].capacity}%"
+        :class "battery ${EWW_BATTERY["BAT0"].status}"
+
+    (metric 
+            :label ""
+            :value {EWW_BATTERY["BAT0"].capacity}
+            :min 0
+            :max 100
+            :onchange ""
+    )
+    )
+)
+
+(defwidget timer []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :class "time-box"
+        :tooltip "${formattime(EWW_TIME, "%A %d %B (%m) %Y")}"
+        (label 
+            :class "time hour"
+            :text "${formattime(EWW_TIME, "%H")}"
+        )
+        (label
+            :class "time minutes"
+            :text "${formattime(EWW_TIME, "%M")}"
+        )
+    )
+)
+
+(defwidget temp []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :class "time-box"
+        :tooltip "CPU: ${EWW_TEMPS["CPU"]}°C | Core 0: ${EWW_TEMPS["CORE_0"]}°C | Core 1: ${EWW_TEMPS["CORE_1"]}°C"
+        (label
+            :text "${EWW_TEMPS}"
+        )
+    )
+)
+
+(defvar byte_div 1000
+)
+
+(defvar byte_rounding 0
+)
+
+(defvar network_interface "wlan0"
+)
+
+(defwidget bits []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :class "bits-box"
+        :tooltip "${network_interface}"
+        (label 
+            :class "bits up"
+            :text "${round(EWW_NET[network_interface]["NET_UP"] / byte_div,
+            byte_rounding)}"
+        )
+        (label
+            :class "bits down"
+            :text "${round(EWW_NET[network_interface]["NET_DOWN"] / byte_div,
+            byte_rounding)}"
+        )
+    )
+)
+
+
+(defwindow bar
+           :monitor 0
+           :geometry (geometry 
+                               :height "100%"
+                               :anchor "left center")
+           :stacking "fg"
+           :exclusive true
+    (box 
+         :class "content"
+         :orientation "v"
+         :space-evenly false
+         :valign "center"
+         (timer)
+         (battery)
+         (volume)
+         (brightness)
+         (bits)
+    )
+)
+
+(deflisten volume :initial "50"
+    "tail -n 1 -F /tmp/volume"
+)
+
+(deflisten brightness :initial 50
+    "tail -n 1 -F /tmp/brightness"
+)
+
+(defvar is_off ""
+)

@@ -1,0 +1,90 @@
+{
+    "layer": "top",
+    "modules-left": ["hyprland/workspaces", "clock"],
+    "modules-right": ["network", "pulseaudio", "backlight", "battery"],
+    "modules-center": ["hyprland/window"],
+    // "clock": {
+        // "format": "{:%H:%M}",
+        // "format-alt": "{:%A, %d. %B (%m) %Y}",
+    // },
+    "clock": {
+        "format": "{:%H:%M}  ",
+	"format-alt": "{:%a, %B (%m) %d}  ",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+	    "mode"          : "month",
+	    "mode-mon-col": 3,
+	    "format": {
+		"months":     "<span color='#ffead3'><b>{}</b></span>",
+		"days":       "<span color='#ecc6d9'><b>{}</b></span>",
+		"weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+		"weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+		"today":      "<span background='white' color='black'><b><u>{}</u></b></span>"
+	    }
+	},
+	"actions":  {
+	    "on-click": "mode"
+	}
+    },
+    "battery": {
+        "format": "{icon}",
+        "format-alt": "{capacity}% {icon}",
+	// Font awesome batteries
+	"format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+	"format-charging": " {icon}",
+	"format-charging-full": " {capacity}% {icon}",
+	"format-charging-half": " {capacity}% {icon}",
+	"states": {
+	    "half": 50,
+	    "low": 20,
+	    "critical": 5
+	}
+    },
+    "network": {
+    	"interface": "wlan0",
+	"format": "{icon}",
+	"format-icons": {
+		"wifi": "",
+		"ethernet": "🖧"
+	},
+	"tooltip-format-wifi": "{essid} ",
+	"on-click": "foot nmtui"
+    },
+    "backlight": {
+        "format": "{icon}",
+        "format-alt": "{percent}% {icon}",
+        "tooltip-format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-alt": " {volume}% {icon}",
+        "tooltip-format": "{desc} {icon}",
+        "format-bluetooth": "{icon}",
+	"format-icons": ["\uf026", "\uf027", "\uf028"], // Font awesome volume icons
+	"on-click-right": "pavucontrol"
+    },
+    "hyprland/workspaces": {
+	"format": "{icon}<sub>{windows}</sub>",
+	"format-window-separator": " ",
+	"window-rewrite-default": "",
+	"window-rewrite": {
+	    "class<firefox>": "",
+	    "class<librewolf>": "",
+	    "class<.*keepassxc> title<.*Locked.*>": "\uf023", // Font awesome locked gyph
+	    "class<.*keepassxc>": "", // Font awesome unlocked gyph
+	    "class<foot>": "",
+	    "class<TriliumNext Notes>": "\uf52d", // Font awesome cloud
+	}
+    },
+    "hyprland/window": {
+	"format": "{}",
+	"rewrite": {
+	    "(.*) — Mozilla Firefox": "$1 ",
+	    "(.*) — Librewolf": "$1 ",
+	    "(.*) .*Locked.*": "$1 \uf023", // Font awesome nlocked gyph
+	    "(.*) - KeePassXC": "$1 ", // Font awesome unlocked gyph
+	},
+	"separate-outputs": true
+    }
+}
