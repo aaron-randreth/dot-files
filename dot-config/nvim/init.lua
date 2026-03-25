@@ -128,16 +128,12 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
-require("gruvbox").setup({
-  transparent_mode = false
-})
-
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.o.background = "light" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
--- vim.g.tokyodark_transparent_background = true
--- vim.cmd [[colorscheme tokyodark]]
+-- vim.o.background = "light" -- or "light" for light mode
+-- vim.cmd([[colorscheme gruvbox]])
+vim.g.tokyodark_transparent_background = true
+vim.cmd [[colorscheme tokyodark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'

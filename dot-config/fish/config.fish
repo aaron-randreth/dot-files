@@ -6,9 +6,12 @@ if status is-interactive
     end
 
     set -g fish_key_bindings fish_vi_key_bindings
+    set -g fish_user_paths /home/apollo-hub/.cargo/bin
 
     # Aliases 
     abbr --add cl clear
     abbr --add l ls
     abbr --add pong ping 1.1.1.1
+
+    starship init fish | source
 end
