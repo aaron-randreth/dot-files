@@ -3,10 +3,12 @@ environment {
     QT_PA_PLATFORM "wayland"
     DISPLAY ":0"
     QT_QPA_PLATFORMTHEME "qt6ct"
+
+    XDG_CONFIG_HOME "~/.config/"
+    XDG_DOWNLOAD_DIR "/tmp/downloads/"
 }
 
-spawn-at-startup "swww-daemon"
-spawn-at-startup "hyprpaper"
+spawn-at-startup "awww-daemon"
 spawn-at-startup "pipestart"
 spawn-at-startup "light" "-N" "5"
 
@@ -156,6 +158,12 @@ layout {
     }
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
+
 prefer-no-csd
 
 screenshot-path "/tmp/screenshots/screenshot_from_%Y-%m-%d %H-%M-%S.png"
@@ -211,12 +219,7 @@ window-rule {
 }
 
 layer-rule {
-  match namespace="^wallpaper$"
-  place-within-backdrop true
-}
-
-layer-rule {
-  match namespace="swww"
+  match namespace="wallpaper|awww"
   place-within-backdrop true
 }
 
@@ -224,6 +227,10 @@ layer-rule {
 overview {
   zoom 0.50
   backdrop-color "#FFFFFF"
+}
+
+hotkey-overlay {
+    hide-not-bound
 }
 
 binds {
