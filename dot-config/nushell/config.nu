@@ -17,6 +17,9 @@
 # options using:
 #     config nu --doc | nu-highlight | less -R
 
+$env.XDG_CONFIG_HOME = $env.HOME | path join .config
+$env.XDG_DOWNLOAD_DIR = "/tmp/downloads"
+
 $env.config.edit_mode = 'vi'
 $env.config.show_banner = false
 $env.config.rm.always_trash = true
