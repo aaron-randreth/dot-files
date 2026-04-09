@@ -9,6 +9,10 @@ spawn-at-startup "awww-daemon"
 spawn-at-startup "pipestart"
 spawn-at-startup "light" "-N" "5"
 
+switch-events {
+  lid-close { spawn "swaylock"; }
+}
+
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
