@@ -196,15 +196,14 @@ window-rule {
     draw-border-with-background false
 }
 
-// Block out password manager from screen capture.
-// (This example rule is commented out with a "/-" in front.)
 window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^mpv$"#
+    draw-border-with-background false
 
-    block-out-from "screen-capture"
+    focus-ring {
+      off
+    }
 
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
 }
 
 window-rule {
@@ -443,9 +442,9 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print { screenshot-window; }
+    Ctrl+Print { screenshot; }
+    Alt+Print { screenshot-screen; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
