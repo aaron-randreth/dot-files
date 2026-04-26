@@ -1,37 +1,56 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
-vim.g.mapleader = " "
+-- transparent background
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
 
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+-- Use spaces for tabulation
+local SPACE_NUMBER = 4
+vim.o.tabstop = SPACE_NUMBER
+vim.o.shiftwidth = SPACE_NUMBER
+vim.o.expandtab = true
 
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+-- Display numbers
+vim.o.number = true
+vim.o.relativenumber = true
+
+-- Map jj and jk to Esc in insert mode
+vim.keymap.set('i', 'jj', '<Esc>', { silent = true })
+vim.keymap.set('i', 'jk', '<Esc>', { silent = true })
+vim.keymap.set('i', '<Esc>', '<Nop>', { silent = true })
+
+-- Unmap arrow keys in normal mode
+vim.keymap.set('', '<Up>', '<Nop>', { silent = true })
+vim.keymap.set('', '<Down>', '<Nop>', { silent = true })
+vim.keymap.set('', '<Left>', '<Nop>', { silent = true })
+vim.keymap.set('', '<Right>', '<Nop>', { silent = true })
+
+vim.pack.add({
+    'https://github.com/nvim-mini/mini.nvim'
+})
+
+function configure_trailspace ()
+    local trailspace = require('mini.trailspace')
+    trailspace.setup()
+
+    -- Trim spaces on write
+    vim.api.nvim_create_autocmd('BufWritePre', {
+        callback = function()
+            trailspace.trim()
+            trailspace.trim_last_lines()
+        end
+    })
 end
 
-vim.opt.rtp:prepend(lazypath)
+configure_trailspace()
+require('mini.pairs').setup()
 
-local lazy_config = require "configs.lazy"
+-- Source - https://stackoverflow.com/a/75302916
+-- Posted by Mr.Programmer
+-- Retrieved 2026-04-25, License - CC BY-SA 4.0
 
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
+-- Sets colors to line numbers Above, Current and Below  in this order
+function color_line_number()
+    vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#51B3EC', bold=true })
+    vim.api.nvim_set_hl(0, 'LineNr', { fg='white', bold=true })
+    vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#FB508F', bold=true })
+end
 
-  { import = "plugins" },
-}, lazy_config)
-
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-
-require "options"
-require "autocmds"
-
-vim.schedule(function()
-  require "mappings"
-end)
+color_line_number()
