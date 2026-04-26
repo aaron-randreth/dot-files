@@ -28,6 +28,14 @@ $env.CARGO_HOME =  $env.HOME | path join .cargo
 
 use std/util "path add"
 
+def "docker ps" [] {
+	^docker ps |
+	from ssv |
+	select NAMES STATUS IMAGE CREATED |
+	rename -b { |n| $n | str downcase } |
+	sort-by names
+}
+
 path add "~/.local/bin"
 path add ($env.CARGO_HOME | path join "bin")
 
